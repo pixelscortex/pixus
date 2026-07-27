@@ -4,7 +4,7 @@ default_platform = "web"
 out_dir = "dist"
 
 [web.app]
-title = "Pixus rstml html! POC"
+title = "Pixus html! playground"
 
 [web.watcher]
 reload_html = true

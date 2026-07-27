@@ -1,13 +1,7 @@
 //! Shared HTML-like template parsing/codegen for Pixus.
 //!
-//! This first POC intentionally keeps the output path simple:
-//!
-//! ```text
-//! rstml nodes -> Dioxus RSX token stream -> dioxus::prelude::rsx! { ... }
-//! ```
-//!
-//! The important part is that both the proc macro and the future watcher/CLI can
-//! reuse this same conversion layer.
+//! The parser lowers rstml nodes into a Dioxus RSX token stream. Both the
+//! compile-time macro and the development-time provider use this module.
 
 use std::collections::HashSet;
 
@@ -20,7 +14,7 @@ use rstml::{
         NodeBlock, NodeElement, NodeName,
     },
 };
-use syn::{LitStr, spanned::Spanned};
+use syn::{Expr, LitStr, Stmt, spanned::Spanned};
 
 /// Parse an `html! { ... }` body and project it into Dioxus `rsx!` body tokens.
 ///
@@ -128,7 +122,10 @@ fn keyed_attribute_to_rsx(attr: &KeyedAttribute) -> syn::Result<TokenStream> {
     match &attr.possible_value {
         KeyedAttributeValue::None => Ok(quote! { #name: true, }),
         KeyedAttributeValue::Value(value) => match &value.value {
-            KVAttributeValue::Expr(expr) => Ok(quote! { #name: #expr, }),
+            KVAttributeValue::Expr(expr) => {
+                let value = attribute_expression_to_rsx(expr);
+                Ok(quote! { #name: #value, })
+            }
             KVAttributeValue::InvalidBraced(value) => Err(syn::Error::new_spanned(
                 value,
                 "invalid braced attribute value",
@@ -139,6 +136,20 @@ fn keyed_attribute_to_rsx(attr: &KeyedAttribute) -> syn::Result<TokenStream> {
             "rstml binding attributes are not supported in pixus html! yet",
         )),
     }
+}
+
+fn attribute_expression_to_rsx(expr: &Expr) -> TokenStream {
+    let Expr::Block(block) = expr else {
+        return quote! { #expr };
+    };
+    if !block.attrs.is_empty() || block.label.is_some() {
+        return quote! { #expr };
+    }
+    let [Stmt::Expr(inner, None)] = block.block.stmts.as_slice() else {
+        return quote! { #expr };
+    };
+
+    quote! { #inner }
 }
 
 fn spread_attribute_to_rsx(block: &NodeBlock) -> syn::Result<TokenStream> {
@@ -219,9 +230,17 @@ mod tests {
         let output = project(quote! {
             <button onclick={handle_click}>{message}</button>
         });
+        assert_eq!(output, "button { onclick : handle_click , { message } }");
+    }
+
+    #[test]
+    fn preserves_multi_statement_attribute_blocks() {
+        let output = project(quote! {
+            <button onclick={let handler = handle_click; handler}>Run</button>
+        });
         assert_eq!(
             output,
-            "button { onclick : { handle_click } , { message } }"
+            "button { onclick : { let handler = handle_click ; handler } , \"Run\" }"
         );
     }
 

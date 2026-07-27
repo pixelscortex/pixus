@@ -1,20 +1,13 @@
-# Pixus rstml `html!` POC
+# Dioxus basic example
 
-This is a normal Dioxus app used to try the Pixus inline macro in a real `dx serve` workflow.
+A small web app for trying Pixus `html!` compilation and Dioxus template hot reload.
 
-Run it with:
+The example is pinned to the Dioxus provider proof commit. Install the matching `dx` and the Pixus provider as described in the [root README](../../README.md), then run:
 
-```bash
-cd examples/dioxus-basic
-dx serve --web
+```sh
+export DIOXUS_TEMPLATE_MACROS=html
+export DIOXUS_TEMPLATE_PROVIDER="$(command -v pixus-template-provider)"
+dx serve --hot-patch false
 ```
 
-What this POC proves:
-
-- `pixus_macro::html!` accepts HTML-like syntax.
-- The macro uses `rstml` for parsing.
-- The macro emits Dioxus `rsx!`, so the app renders through normal Dioxus.
-
-What this POC does **not** prove yet:
-
-- Stock `dx serve` template hot reload for `html!` edits. `dx` still scans raw source for literal `rsx!`/`render!` calls, so edits inside `html!` are expected to rebuild/hotpatch until we add the Pixus wrapper/watcher.
+Edit `src/main.rs` while the app is running. A template-only `html!` edit should update through Dioxus without resetting the counter. An ordinary Rust edit should use Dioxus's rebuild path.

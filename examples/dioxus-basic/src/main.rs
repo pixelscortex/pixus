@@ -11,8 +11,8 @@ fn App() -> Element {
 
     html! {
         <main class="container">
-            <h1>"Pixus rstml html! POC"</h1>
-            <p class="lead">"This template is parsed by rstml, then emitted as Dioxus RSX."</p>
+            <h1>"Pixus html! playground"</h1>
+            <p class="lead">"HTML-like syntax lowered into normal Dioxus RSX."</p>
             <p>"Count: {count}"</p>
             <button type="button" onclick={move |_| count += 1}>
                 "Increment"

@@ -5,5 +5,5 @@ edition.workspace = true
 publish = false
 
 [dependencies]
-dioxus = { version = "0.7.6", features = ["web"] }
+dioxus = { git = "https://github.com/JustKira/dioxus", rev = "30f01fe9185127de806f5d82dcb9d63498efa3af", features = ["web"] }
 pixus-macro = { path = "../../crates/pixus-macro" }

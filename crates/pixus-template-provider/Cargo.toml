@@ -1,0 +1,17 @@
+[package]
+name = "pixus-template-provider"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Dioxus external template provider for Pixus html! bodies"
+readme = "README.md"
+
+[[bin]]
+name = "pixus-template-provider"
+path = "src/main.rs"
+
+[dependencies]
+anyhow.workspace = true
+pixus-core = { version = "0.1.0", path = "../pixus-core" }
+proc-macro2.workspace = true

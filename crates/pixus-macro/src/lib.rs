@@ -1,7 +1,7 @@
-//! Procedural macros for Pixus.
+//! HTML-like template syntax for Dioxus.
 //!
-//! `html!` is intentionally tiny in this POC: it delegates all parsing and
-//! conversion to `pixus-core`, which uses `rstml` and then emits Dioxus RSX.
+//! `html!` delegates parsing and lowering to `pixus-core`, which uses `rstml`
+//! and emits a normal Dioxus `rsx!` invocation.
 
 use proc_macro::TokenStream;
 
