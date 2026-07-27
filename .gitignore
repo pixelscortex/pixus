@@ -1,0 +1,18 @@
+# Rust build output
+/target/
+**/*.rs.bk
+
+# Local research and vendored checkouts
+/.working/
+
+# Local environment and logs
+.env
+.env.*
+!.env.example
+*.log
+
+# Editor and operating-system files
+.DS_Store
+.idea/
+.vscode/
+*.swp

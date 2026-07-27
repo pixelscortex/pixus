@@ -1,0 +1,9 @@
+[package]
+name = "dioxus-basic"
+version = "0.1.0"
+edition.workspace = true
+publish = false
+
+[dependencies]
+dioxus = { version = "0.7.6", features = ["web"] }
+pixus-macro = { path = "../../crates/pixus-macro" }

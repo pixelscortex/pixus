@@ -1,0 +1,11 @@
+[application]
+name = "pixus-dioxus-basic"
+default_platform = "web"
+out_dir = "dist"
+
+[web.app]
+title = "Pixus rstml html! POC"
+
+[web.watcher]
+reload_html = true
+watch_path = ["src"]
