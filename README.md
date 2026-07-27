@@ -26,10 +26,10 @@ Pixus lowers the HTML-like body into normal Dioxus RSX. Dioxus remains the rende
 
 Pixus is a pre-release proof for testing and experimentation.
 
-Compile-time rendering works through the normal procedural macro. Template-only hot reload requires a Dioxus DX build containing the external-template-provider seam. Until that feature is released upstream, this repository pins its example to the exact Dioxus proof commit:
+Compile-time rendering works through the normal procedural macro. Template-only hot reload requires a Dioxus DX build containing the [external-template-provider seam proposed upstream](https://github.com/DioxusLabs/dioxus/issues/5715). Until that feature is released, this repository pins its example to the exact Dioxus proof commit:
 
 ```text
-30f01fe9185127de806f5d82dcb9d63498efa3af
+3d9b9b94ffbce373f0267839b2032b9e97eec32f
 ```
 
 Do not combine the example with the older stock Dioxus 0.7.6 CLI: that release does not contain the provider seam.
@@ -41,7 +41,7 @@ Do not combine the example with the older stock Dioxus 0.7.6 CLI: that release d
 ```sh
 git clone https://github.com/JustKira/dioxus.git
 cd dioxus
-git checkout 30f01fe9185127de806f5d82dcb9d63498efa3af
+git checkout 3d9b9b94ffbce373f0267839b2032b9e97eec32f
 cargo install --path packages/cli --locked --force
 ```
 
@@ -71,7 +71,7 @@ Before crates are published, depend on the repository directly:
 
 ```toml
 [dependencies]
-dioxus = { git = "https://github.com/JustKira/dioxus", rev = "30f01fe9185127de806f5d82dcb9d63498efa3af" }
+dioxus = { git = "https://github.com/JustKira/dioxus", rev = "3d9b9b94ffbce373f0267839b2032b9e97eec32f" }
 pixus-macro = { git = "https://github.com/pixelscortex/pixus" }
 ```
 
