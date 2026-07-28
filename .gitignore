@@ -4,6 +4,7 @@
 
 # Local research and vendored checkouts
 /.working/
+/.docs/
 
 # Local environment and logs
 .env

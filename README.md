@@ -131,8 +131,3 @@ development time
 ```
 
 The compile-time macro and development-time provider share `pixus-core::html_to_rsx_body`, preventing two independent lowering implementations from drifting.
-
-## More detail
-
-- [`docs/pixus-template-provider.md`](docs/pixus-template-provider.md) — implementation and correctness report.
-- [`docs/dioxus-external-template-provider-pr-draft.md`](docs/dioxus-external-template-provider-pr-draft.md) — generic Dioxus pull-request draft.
